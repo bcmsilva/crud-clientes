@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyB_zmozoXIJjWKCnvkkOOO3xNLtxUMaMB4",
-    authDomain: "crud-clientes.firebaseapp.com",
-    databaseURL: "https://crud-clientes.firebaseio.com",
-    projectId: "crud-clientes",
-    storageBucket: "crud-clientes.appspot.com",
-    messagingSenderId: "21896194320",
-    appId: "1:21896194320:web:e663ca2e8090e3cf06dd95"
+    apiKey: "AIzaSyDG3vV96LWVvlbqATtRr_EZOZJlgL7IMxc",
+    authDomain: "crud-clientes-4e188.firebaseapp.com",
+    databaseURL: "https://crud-clientes-4e188.firebaseio.com",
+    projectId: "crud-clientes-4e188",
+    storageBucket: "crud-clientes-4e188.appspot.com",
+    messagingSenderId: "586674523423",
+    appId: "1:586674523423:web:d9509066af28fc1a4e342a"
   }
 };
 

@@ -35,6 +35,6 @@ export class GrupoClienteService {
   }
 
   delete(key: string) { 
-    this.db.object('grupo-cliente/${key}').remove();
+    this.db.object('grupo-cliente/' + key).remove();
   }
 }

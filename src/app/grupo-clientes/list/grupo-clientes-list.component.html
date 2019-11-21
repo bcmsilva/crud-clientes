@@ -1,1 +1,12 @@
-<p>grupo-clientes-list works!</p>
+<div class="card mt-2" *ngFor="let grupo of grupos | async">
+    <div class="card-body">
+      <h5 class="card-title">{{grupo.nome}}</h5>
+      <p class="card-text">{{grupo.ativo}}</p>
+      <p class="card-text">{{grupo.key}}</p>
+      <!-- <p class="card-text">{{contato.telefone}}</p> -->
+    </div>
+    <div class="card-footer">
+      <button type="button" class="btn btn-default" (click)="edit(grupo, grupo.key)">Editar</button>
+      <button type="button" class="btn btn-danger ml-2" (click)="delete(grupo.key)">Excluir</button>
+    </div>
+  </div>
