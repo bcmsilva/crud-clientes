@@ -6,7 +6,8 @@
       <div class="form-group row">
         <label for="nome" class="col-sm-2 col-form-label">Nome</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="nome" placeholder="Este filtro faz distinção entre maiúsculas e minúsculas" formControlName="nome">
+          <input type="text" class="form-control" id="nome"
+            placeholder="Este filtro faz distinção entre maiúsculas e minúsculas" formControlName="nome">
         </div>
       </div>
       <div class="form-group row">
@@ -49,7 +50,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let grupo of grupos | async">
-          <td>{{ grupo.ativo ? 'Sim' : 'Não' }}</td>
+          <td>
+            <span *ngIf="grupo.ativo == true" class="badge badge-pill badge-success">Ativo</span>
+            <span *ngIf="grupo.ativo != true" class="badge badge-pill badge-secondary">Inativo</span>
+          </td>
           <td>{{ grupo.nome }}</td>
           <td>
             <a routerLink="/grupo-cliente-edit/{{ grupo.id }}" class="btn btn-primary btn-sm">

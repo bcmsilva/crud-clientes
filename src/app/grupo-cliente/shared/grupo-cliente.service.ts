@@ -33,7 +33,7 @@ export class GrupoClienteService {
     this.grupoDoc.delete();
   }
 
-  getAll(nomeFiltro?: string, ativoFiltro?: boolean) {
+  getAll(nomeFiltro?: string, ativoFiltro?: boolean, orderBy?: string) {
 
     return this.db.collection(this.endpoint, ref => {
 
@@ -48,6 +48,9 @@ export class GrupoClienteService {
 
       if (ativoFiltro)
         query = (query || ref).where('ativo', '==', ativoFiltro);
+
+      if (orderBy)
+        query = (query || ref).orderBy(orderBy);
 
       return (query || ref);
     })
