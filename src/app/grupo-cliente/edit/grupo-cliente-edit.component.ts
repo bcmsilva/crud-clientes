@@ -64,5 +64,9 @@ export class GrupoClienteEditComponent implements OnInit {
 
       this.router.navigate(['/grupo-cliente-list']);
     }
+    else
+      this.formGrupo.markAllAsTouched();
   }
+
+  get nome() { return this.formGrupo.get('nome'); }
 }
