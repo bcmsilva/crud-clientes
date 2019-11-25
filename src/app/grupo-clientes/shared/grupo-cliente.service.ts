@@ -1,49 +1,69 @@
 import { Injectable } from '@angular/core';
 import { GrupoCliente } from './grupo-cliente';
 import { map } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GrupoClienteService {
 
-  constructor(private db: AngularFirestore) { }
+  private readonly endpoint: string = "grupo-cliente"
 
-  insert(grupoCliente: GrupoCliente) {
-    // this.db.list('grupo-cliente').push(grupoCliente)
-    //   .then((result: any) => {
-    //     console.log(result.key);
-    //   });
+  private grupos: AngularFirestoreCollection<GrupoCliente>;
+  private grupoDoc: AngularFirestoreDocument<GrupoCliente>;
+
+  constructor(private db: AngularFirestore) {
+    this.grupos = db.collection<GrupoCliente>(this.endpoint);
   }
 
-  update(grupoCliente: GrupoCliente, key: string) {
-    // this.db.list('grupo-cliente').update(key, grupoCliente)
-    //   .catch((error: any) => {
-    //     console.error(error);
-    //   });
+  insert(grupo: GrupoCliente) {
+    this.grupos.add(grupo);
   }
 
-  getAll(nomeStartsWith: string, ativo: boolean) {
-    return this.db.collection('grupo-cliente', ref => {
+  update(id: string, grupo: GrupoCliente) {
 
-      if (nomeStartsWith)
-        ref.orderBy(nomeStartsWith).startAt(nomeStartsWith).endAt(nomeStartsWith + "\uf8ff");
+    this.grupoDoc = this.db.doc<GrupoCliente>('${endpoint}/${id}');
+    this.grupoDoc.update(grupo);
+  }
 
-      if (ativo)
-        ref.where('ativo', '==', ativo);
+  delete(id: string) {
+    this.grupoDoc = this.db.doc<GrupoCliente>('${endpoint}/${id}');
+    this.grupoDoc.delete();
+  }
+
+  getAll() {
+    return this.db.collection(this.endpoint, ref => {
+
+      // if (nomeStartsWith)
+      //   ref.orderBy(nomeStartsWith).startAt(nomeStartsWith).endAt(nomeStartsWith + "\uf8ff");
+
+      // if (ativo)
+      //   ref.where('ativo', '==', ativo);
 
       return ref;
     })
       .snapshotChanges()
       .pipe(
         map(data => {
-          return data.map(c => ({ key: c.payload.doc.id, ...c.payload.doc.data() }));
+          return data.map(c => <GrupoCliente>{ id: c.payload.doc.id, ...c.payload.doc.data() });
         })
       );
   }
 
-  delete(key: string) {
-    //this.db.object('grupo-cliente/' + key).remove();
+  get(id: string) : Observable<GrupoCliente> {
+    this.grupoDoc = this.db.doc<GrupoCliente>('${endpoint}/${id}');
+
+    return new Observable((observer) => {
+      this.db.collection(this.endpoint).doc(id).ref.get().then((doc) => {
+        let data = doc.data();
+        observer.next(<GrupoCliente>{
+          id: doc.id,
+          ativo: data.ativo,
+          nome: data.nomes
+        });
+      });
+    });
   }
 }

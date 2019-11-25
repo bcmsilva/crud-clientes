@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GrupoCliente } from '../shared/grupo-cliente';
 import { GrupoClienteService } from '../shared/grupo-cliente.service';
-import { GrupoClienteDataService } from '../shared/grupo-cliente-data.service';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-grupo-clientes-edit',
@@ -9,35 +11,51 @@ import { GrupoClienteDataService } from '../shared/grupo-cliente-data.service';
   styleUrls: ['./grupo-clientes-edit.component.css']
 })
 export class GrupoClientesEditComponent implements OnInit {
-  grupoCliente: GrupoCliente;
-  key: string;
+  id: string;
+  grupo: Observable<GrupoCliente>;
+
+  formGrupo: FormGroup;
 
   constructor(
     private grupoClienteService: GrupoClienteService,
-    private grupoClienteDataService: GrupoClienteDataService) { }
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
-    this.grupoCliente = new GrupoCliente();
 
-    this.grupoClienteDataService.currentGrupoCliente.subscribe(data => {
-      if(data.grupoCliente && data.key){
-        this.grupoCliente = new GrupoCliente();
-        this.grupoCliente.nome = data.grupoCliente.nome;
-        this.grupoCliente.ativo = data.grupoCliente.ativo;
-        this.key = data.key;
-      }
+    this.formGrupo = this.formBuilder.group({
+      ativo: this.formBuilder.control(''),
+      nome: this.formBuilder.control('', Validators.required)
+    });
+
+    this.id = this.route.snapshot.params['id'];
+
+    if (this.id)
+      this.grupo = this.grupoClienteService.get(this.id);
+  }
+
+  definirForm(grupo: GrupoCliente) {
+    this.formGrupo = this.formBuilder.group({
+      ativo: this.formBuilder.control(grupo.ativo),
+      nome: this.formBuilder.control(grupo.nome, Validators.required)
     });
   }
 
   salvar() {
-    if (this.key) { 
-      this.grupoClienteService.update(this.grupoCliente, this.key);
-    }
-    else {
-      this.grupoClienteService.insert(this.grupoCliente);
-    }
+    if (this.formGrupo.valid) {
+      if (!this.id) {
+        let grupo = <GrupoCliente>{
+          ativo: this.formGrupo.controls['ativo'].value,
+          nome: this.formGrupo.controls['nome'].value
+        };
 
-    this.grupoCliente = new GrupoCliente();
-    this.key = null;
+        this.grupoClienteService.insert(grupo);
+        this.router.navigate(['/grupo-cliente-list']);
+      }
+      else {
+
+      }
+    }
   }
 }

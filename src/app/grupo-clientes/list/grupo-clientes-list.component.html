@@ -33,7 +33,7 @@
 <div class="card">
   <div class="card-body">
 
-    <a href="#" class="btn btn-primary mb-2">
+    <a routerLink="/grupo-cliente-add" class="btn btn-primary mb-2">
       <i class="fas fa-plus"></i>&nbsp;Novo
     </a>
 
@@ -50,9 +50,9 @@
           <td>{{ grupo.ativo ? 'Sim' : 'Não' }}</td>
           <td>{{ grupo.nome }}</td>
           <td>
-            <button type="button" class="btn btn-primary btn-sm" (click)="edit(grupo, grupo.key)">
+            <a routerLink="/grupo-cliente-edit/{{ grupo.id }}" class="btn btn-primary btn-sm">
               <i class="fas fa-pencil-alt"></i>
-            </button>
+            </a>
             &nbsp;
             <button type="button" class="btn btn-danger btn-sm" (click)="delete(grupo.key)">
               <i class="fas fa-trash-alt"></i>

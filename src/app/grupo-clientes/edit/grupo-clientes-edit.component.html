@@ -1,9 +1,19 @@
-<form (ngSubmit)="salvar()">
+<form *ngIf="grupo | async; else carregando" (ngSubmit)="salvar()" [formGroup]="formGrupo">
+
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="ativo" formControlName="ativo">
+    <label class="form-check-label" for="ativo">Ativo</label>
+  </div>
 
   <div class="form-group">
     <label>Nome</label>
-    <input type="text" class="form-control" [(ngModel)]="grupoCliente.nome" name="nome" />
+    <input type="text" class="form-control" formControlName="nome" />
   </div>
 
-  <button type="submit" class="btn btn-primary">Salvar</button>
+  <button type="submit" class="btn btn-primary">Salvar</button>&nbsp;
+  <a routerLink="/grupo-cliente-list" class="btn btn-light mb-2">Cancelar</a>
 </form>
+
+<ng-template #loading>
+  Carregando...
+</ng-template>
