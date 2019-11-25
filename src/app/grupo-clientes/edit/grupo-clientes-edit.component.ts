@@ -3,7 +3,6 @@ import { GrupoCliente } from '../shared/grupo-cliente';
 import { GrupoClienteService } from '../shared/grupo-cliente.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-grupo-clientes-edit',
@@ -37,7 +36,7 @@ export class GrupoClientesEditComponent implements OnInit {
   carregarGrupo() {
     this.grupoClienteService.get(this.id).subscribe(grupo => {
       this.carregando = false;
-      
+
       this.formGrupo.controls['nome'].setValue(grupo.nome);
       this.formGrupo.controls['ativo'].setValue(grupo.ativo);
     });
@@ -45,7 +44,7 @@ export class GrupoClientesEditComponent implements OnInit {
 
   definirForm() {
     this.formGrupo = this.formBuilder.group({
-      ativo: this.formBuilder.control(''),
+      ativo: this.formBuilder.control(true),
       nome: this.formBuilder.control('', Validators.required)
     });
   }

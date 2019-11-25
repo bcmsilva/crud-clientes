@@ -34,18 +34,22 @@ export class GrupoClienteService {
   }
 
   getAll(nomeFiltro?: string, ativoFiltro?: boolean) {
-    
+
     return this.db.collection(this.endpoint, ref => {
 
-      let query = ref;
+      let query: any;
 
-      if (nomeFiltro)
-        ref = ref.where('nome', '>=', nomeFiltro);
+      if (nomeFiltro) {
+        let end = nomeFiltro.replace(/.$/, c => String.fromCharCode(c.charCodeAt(0) + 1));
+        query = (query || ref)
+          .where('nome', '>=', nomeFiltro)
+          .where('nome', '<', end);
+      }
 
       if (ativoFiltro)
-        ref = ref.where('ativo', '==', ativoFiltro);
+        query = (query || ref).where('ativo', '==', ativoFiltro);
 
-      return ref;
+      return (query || ref);
     })
       .snapshotChanges()
       .pipe(
