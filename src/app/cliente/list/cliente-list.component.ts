@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { GrupoClienteService } from '../shared/grupo-cliente.service';
+import { ClienteService } from '../shared/cliente.service';
 import { Observable } from 'rxjs';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-grupo-cliente-list',
-  templateUrl: './grupo-cliente-list.component.html',
-  styleUrls: ['./grupo-cliente-list.component.css']
+  selector: 'app-cliente-list',
+  templateUrl: './cliente-list.component.html',
+  styleUrls: ['./cliente-list.component.css']
 })
-export class GrupoClienteListComponent implements OnInit {
+export class ClienteListComponent implements OnInit {
 
   formFiltrar: FormGroup;
 
-  grupos: Observable<any>;
+  clientes: Observable<any>;
 
   constructor(
-    private grupoClienteService: GrupoClienteService,
+    private clienteService: ClienteService,
     private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
-    this.grupos = this.grupoClienteService.getAll(null);
+    this.clientes = this.clienteService.getAll();
 
     this.formFiltrar = this.formBuilder.group({
       nome: this.formBuilder.control(null),
@@ -31,11 +31,11 @@ export class GrupoClienteListComponent implements OnInit {
   excluir(id: string) {
 
     if (confirm("Tem certeza que deseja excluir este registro?"))
-      this.grupoClienteService.delete(id);
+      this.clienteService.delete(id);
   }
 
   filtrar() {
-    this.grupos = this.grupoClienteService.getAll(
+    this.clientes = this.clienteService.getAll(
       this.formFiltrar.controls['nome'].value, 
       this.formFiltrar.controls['ativo'].value);
   }
