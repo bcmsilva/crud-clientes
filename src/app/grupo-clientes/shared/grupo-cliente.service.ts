@@ -24,12 +24,12 @@ export class GrupoClienteService {
 
   update(id: string, grupo: GrupoCliente) {
 
-    this.grupoDoc = this.db.doc<GrupoCliente>('${endpoint}/${id}');
+    this.grupoDoc = this.db.collection(this.endpoint).doc(id);
     this.grupoDoc.update(grupo);
   }
 
   delete(id: string) {
-    this.grupoDoc = this.db.doc<GrupoCliente>('${endpoint}/${id}');
+    this.grupoDoc = this.db.collection(this.endpoint).doc(id);
     this.grupoDoc.delete();
   }
 
@@ -53,15 +53,15 @@ export class GrupoClienteService {
   }
 
   get(id: string) : Observable<GrupoCliente> {
-    this.grupoDoc = this.db.doc<GrupoCliente>('${endpoint}/${id}');
+    this.grupoDoc = this.db.collection(this.endpoint).doc(id);
 
     return new Observable((observer) => {
-      this.db.collection(this.endpoint).doc(id).ref.get().then((doc) => {
+      this.grupoDoc.ref.get().then((doc) => {
         let data = doc.data();
         observer.next(<GrupoCliente>{
           id: doc.id,
           ativo: data.ativo,
-          nome: data.nomes
+          nome: data.nome
         });
       });
     });

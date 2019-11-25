@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class GrupoClientesEditComponent implements OnInit {
   id: string;
-  grupo: Observable<GrupoCliente>;
+  // grupo: Observable<GrupoCliente>;
 
   formGrupo: FormGroup;
 
@@ -24,38 +24,42 @@ export class GrupoClientesEditComponent implements OnInit {
 
   ngOnInit() {
 
-    this.formGrupo = this.formBuilder.group({
-      ativo: this.formBuilder.control(''),
-      nome: this.formBuilder.control('', Validators.required)
-    });
+    this.definirForm();
 
     this.id = this.route.snapshot.params['id'];
 
     if (this.id)
-      this.grupo = this.grupoClienteService.get(this.id);
+      this.carregarGrupo();
   }
 
-  definirForm(grupo: GrupoCliente) {
+  carregarGrupo() {
+    this.grupoClienteService.get(this.id).subscribe(grupo => {
+      this.formGrupo.controls['nome'].setValue(grupo.nome);
+      this.formGrupo.controls['ativo'].setValue(grupo.ativo);
+    });
+  }
+
+  definirForm() {
     this.formGrupo = this.formBuilder.group({
-      ativo: this.formBuilder.control(grupo.ativo),
-      nome: this.formBuilder.control(grupo.nome, Validators.required)
+      ativo: this.formBuilder.control(''),
+      nome: this.formBuilder.control('', Validators.required)
     });
   }
 
   salvar() {
     if (this.formGrupo.valid) {
-      if (!this.id) {
-        let grupo = <GrupoCliente>{
-          ativo: this.formGrupo.controls['ativo'].value,
-          nome: this.formGrupo.controls['nome'].value
-        };
 
+      let grupo = <GrupoCliente>{
+        ativo: this.formGrupo.controls['ativo'].value,
+        nome: this.formGrupo.controls['nome'].value
+      };
+
+      if (!this.id) 
         this.grupoClienteService.insert(grupo);
-        this.router.navigate(['/grupo-cliente-list']);
-      }
-      else {
+      else 
+        this.grupoClienteService.update(this.id, grupo);
 
-      }
+      this.router.navigate(['/grupo-cliente-list']);
     }
   }
 }

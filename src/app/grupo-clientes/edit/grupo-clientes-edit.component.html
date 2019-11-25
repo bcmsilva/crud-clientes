@@ -1,4 +1,6 @@
-<form *ngIf="grupo | async; else carregando" (ngSubmit)="salvar()" [formGroup]="formGrupo">
+<!-- *ngIf="grupo | async; else carregando" -->
+
+<form (ngSubmit)="salvar()" [formGroup]="formGrupo">
 
   <div class="form-check">
     <input type="checkbox" class="form-check-input" id="ativo" formControlName="ativo">
@@ -14,6 +16,6 @@
   <a routerLink="/grupo-cliente-list" class="btn btn-light mb-2">Cancelar</a>
 </form>
 
-<ng-template #loading>
+<!-- <ng-template #loading>
   Carregando...
-</ng-template>
+</ng-template> -->
