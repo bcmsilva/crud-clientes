@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { GrupoCliente } from '../shared/grupo-cliente';
 import { GrupoClienteService } from '../shared/grupo-cliente.service';
 import { Observable } from 'rxjs';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-grupo-clientes-list',
-  templateUrl: './grupo-clientes-list.component.html',
-  styleUrls: ['./grupo-clientes-list.component.css']
+  selector: 'app-grupo-cliente-list',
+  templateUrl: './grupo-cliente-list.component.html',
+  styleUrls: ['./grupo-cliente-list.component.css']
 })
-export class GrupoClientesListComponent implements OnInit {
+export class GrupoClienteListComponent implements OnInit {
 
   formFiltrar: FormGroup;
 

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { GrupoCliente } from '../shared/grupo-cliente';
 import { GrupoClienteService } from '../shared/grupo-cliente.service';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-grupo-clientes-edit',
-  templateUrl: './grupo-clientes-edit.component.html',
-  styleUrls: ['./grupo-clientes-edit.component.css']
+  selector: 'app-grupo-cliente-edit',
+  templateUrl: './grupo-cliente-edit.component.html',
+  styleUrls: ['./grupo-cliente-edit.component.css']
 })
-export class GrupoClientesEditComponent implements OnInit {
+export class GrupoClienteEditComponent implements OnInit {
   id: string;
   carregando: boolean;
   formGrupo: FormGroup;
