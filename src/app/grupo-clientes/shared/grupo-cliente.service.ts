@@ -33,14 +33,17 @@ export class GrupoClienteService {
     this.grupoDoc.delete();
   }
 
-  getAll() {
+  getAll(nomeFiltro?: string, ativoFiltro?: boolean) {
+    
     return this.db.collection(this.endpoint, ref => {
 
-      // if (nomeStartsWith)
-      //   ref.orderBy(nomeStartsWith).startAt(nomeStartsWith).endAt(nomeStartsWith + "\uf8ff");
+      let query = ref;
 
-      // if (ativo)
-      //   ref.where('ativo', '==', ativo);
+      if (nomeFiltro)
+        ref = ref.where('nome', '>=', nomeFiltro);
+
+      if (ativoFiltro)
+        ref = ref.where('ativo', '==', ativoFiltro);
 
       return ref;
     })
@@ -52,7 +55,7 @@ export class GrupoClienteService {
       );
   }
 
-  get(id: string) : Observable<GrupoCliente> {
+  get(id: string): Observable<GrupoCliente> {
     this.grupoDoc = this.db.collection(this.endpoint).doc(id);
 
     return new Observable((observer) => {

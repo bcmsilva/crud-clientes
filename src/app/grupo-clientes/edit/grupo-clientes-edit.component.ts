@@ -12,8 +12,7 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class GrupoClientesEditComponent implements OnInit {
   id: string;
-  // grupo: Observable<GrupoCliente>;
-
+  carregando: boolean;
   formGrupo: FormGroup;
 
   constructor(
@@ -29,11 +28,16 @@ export class GrupoClientesEditComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
 
     if (this.id)
+    {
+      this.carregando = true;
       this.carregarGrupo();
+    }
   }
 
   carregarGrupo() {
     this.grupoClienteService.get(this.id).subscribe(grupo => {
+      this.carregando = false;
+      
       this.formGrupo.controls['nome'].setValue(grupo.nome);
       this.formGrupo.controls['ativo'].setValue(grupo.ativo);
     });

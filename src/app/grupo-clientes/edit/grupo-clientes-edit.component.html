@@ -1,21 +1,28 @@
-<!-- *ngIf="grupo | async; else carregando" -->
+<form *ngIf="!carregando" (ngSubmit)="salvar()" [formGroup]="formGrupo">
 
-<form (ngSubmit)="salvar()" [formGroup]="formGrupo">
-
-  <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="ativo" formControlName="ativo">
-    <label class="form-check-label" for="ativo">Ativo</label>
+  <div class="form-group row">
+    <div class="col-sm-2">Ativo</div>
+    <div class="col-sm-10">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="ativo" formControlName="ativo">
+        <label class="form-check-label" for="ativo">
+          Ativo
+        </label>
+      </div>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label>Nome</label>
-    <input type="text" class="form-control" formControlName="nome" />
+  <div class="form-group row">
+    <label for="nome" class="col-sm-2 col-form-label">Nome</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="nome" formControlName="nome">
+    </div>
   </div>
 
-  <button type="submit" class="btn btn-primary">Salvar</button>&nbsp;
+  <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-save"></i>&nbsp;Salvar</button>&nbsp;
   <a routerLink="/grupo-cliente-list" class="btn btn-light mb-2">Cancelar</a>
 </form>
 
-<!-- <ng-template #loading>
+<p *ngIf="carregando">
   Carregando...
-</ng-template> -->
+</p>

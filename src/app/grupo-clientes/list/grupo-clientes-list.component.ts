@@ -21,7 +21,7 @@ export class GrupoClientesListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.grupos = this.grupoClienteService.getAll();
+    this.grupos = this.grupoClienteService.getAll(null);
 
     console.log(this.grupos);
 
@@ -31,18 +31,15 @@ export class GrupoClientesListComponent implements OnInit {
     });
   }
 
-  delete(id: string) {
+  excluir(id: string) {
 
     if (confirm("Tem certeza que deseja excluir este registro?"))
       this.grupoClienteService.delete(id);
   }
 
   filtrar() {
-
-    //     return new Observable<GrupoCliente>()
-    // this.grupos.
-
-    //     this.grupoClienteService.getAll(this.formFiltrar.controls['nome'].value, this.formFiltrar.controls['ativo'].value)
-    //     console.log(this.formFiltrar);
+    this.grupos = this.grupoClienteService.getAll(
+      this.formFiltrar.controls['nome'].value, 
+      this.formFiltrar.controls['ativo'].value);
   }
 }
