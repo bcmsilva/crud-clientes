@@ -17,6 +17,8 @@ import { GrupoClienteEditComponent } from './grupo-cliente/edit/grupo-cliente-ed
 import { GrupoClienteListComponent } from './grupo-cliente/list/grupo-cliente-list.component';
 import { ClienteEditComponent } from './cliente/edit/cliente-edit.component';
 import { ClienteListComponent } from './cliente/list/cliente-list.component';
+import { LoginComponent } from './auth/login/login.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { ClienteListComponent } from './cliente/list/cliente-list.component';
     GrupoClienteEditComponent,
     GrupoClienteListComponent,
     ClienteEditComponent,
-    ClienteListComponent
+    ClienteListComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

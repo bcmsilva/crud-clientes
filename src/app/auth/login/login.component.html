@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-body">
+        <form (ngSubmit)="login()" [formGroup]="formLogin">
+
+            <div class="form-group">
+                <label for="nomeUsuario">Usuário</label>
+                <input type="text" class="form-control"
+                    [class.is-invalid]="nomeUsuario.invalid && (nomeUsuario.dirty || nomeUsuario.touched)"
+                    id="nomeUsuario" formControlName="nomeUsuario">
+                <div *ngIf="nomeUsuario.invalid && (nomeUsuario.dirty || nomeUsuario.touched)" class="invalid-feedback">
+                    Informe o usuário.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" class="form-control"
+                    [class.is-invalid]="senha.invalid && (senha.dirty || senha.touched)" id="senha"
+                    formControlName="senha">
+                <div *ngIf="senha.invalid && (senha.dirty || senha.touched)" class="invalid-feedback">
+                    Informe a senha.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-sign-in-alt"></i>&nbsp;Login</button>&nbsp;
+        </form>
+    </div>
+</div>
